@@ -42,14 +42,16 @@ public class PetRegistry {
             ps.println("2. Вывести список команд животного");
             ps.println("3. Обучить животное новой команде");
             ps.println("4. Вывести список животных по дате рождения");
-            ps.println("5. Выход");
+            ps.println("5. Вывести общее количество животных");
+            ps.println("6. Выход");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    ps.println("Введите тип животного (собака/кошка/хомяк/лошадь/верблюд/осёл): ");
+                case 1 -> {
+                    ps.println("Введите тип животного (dog/cat/hamster/horse/camel/donkey): ");
+                    // не читает русский язык
                     String type = scanner.nextLine();
                     ps.println("Введите имя животного: ");
                     String name = scanner.nextLine();
@@ -60,34 +62,23 @@ public class PetRegistry {
 
                     Animal animal;
                     switch (type.toLowerCase()) {
-                        case "dog":
-                            animal = new Dog(name, birthDate);
-                            break;
-                        case "cat":
-                            animal = new Cat(name, birthDate);
-                            break;
-                        case "hamster":
-                            animal = new Hamster(name, birthDate);
-                            break;
-                        case "horse":
-                            animal = new Dog(name, birthDate);
-                            break;
-                        case "camel":
-                            animal = new Cat(name, birthDate);
-                            break;
-                        case "donkey":
-                            animal = new Hamster(name, birthDate);
-                            break;
-                        default:
+                        case "dog" -> animal = new Dog(name, birthDate);
+                        case "cat" -> animal = new Cat(name, birthDate);
+                        case "hamster" -> animal = new Hamster(name, birthDate);
+                        case "horse" -> animal = new Dog(name, birthDate);
+                        case "camel" -> animal = new Cat(name, birthDate);
+                        case "donkey" -> animal = new Hamster(name, birthDate);
+                        default -> {
                             ps.println(type.toString());
                             ps.println("Неизвестный тип животного.");
                             continue;
                     }
+                    }
                     registry.addAnimal(animal);
                     ps.println("Животное добавлено.");
-                    break;
+                }
 
-                case 2:
+                case 2 -> {
                     ps.print("Введите имя животного: ");
                     String animalName = scanner.nextLine();
                     Optional<Animal> foundAnimal = registry.animals.stream().filter(a -> a.name.equals(animalName))
@@ -97,9 +88,9 @@ public class PetRegistry {
                     } else {
                         ps.println("Животное не найдено.");
                     }
-                    break;
+                }
 
-                case 3:
+                case 3 -> {
                     ps.print("Введите имя животного: ");
                     String teachName = scanner.nextLine();
                     Optional<Animal> teachAnimal = registry.animals.stream().filter(a -> a.name.equals(teachName))
@@ -111,23 +102,19 @@ public class PetRegistry {
                     } else {
                         ps.println("Животное не найдено.");
                     }
-                    break;
+                }
 
-                case 4:
-                    registry.listAnimalsByBirthDate();
-                    break;
+                case 4 -> registry.listAnimalsByBirthDate();
 
-                case 5:
-                    System.out.println("Общее количество животных: " + Animal.getTotalAnimals());
-                    break;
+                case 5 -> System.out.println("Общее количество животных: " + Animal.getTotalAnimals());
 
-                case 6:
+                case 6 -> {
                     ps.println("Выход из программы.");
                     scanner.close();
                     return;
+                }
 
-                default:
-                    ps.println("Неверный выбор. Попробуйте снова.");
+                default -> ps.println("Неверный выбор. Попробуйте снова.");
             }
         }
     }

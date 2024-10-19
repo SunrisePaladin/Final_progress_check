@@ -10,6 +10,7 @@ abstract class Animal {
         this.name = name;
         this.birthDate = birthDate;
         this.commands = new ArrayList<>();
+        totalAnimals++;
     }
 
     public static int getTotalAnimals() {
